@@ -6,8 +6,8 @@
 #define LED 2
 String payload = "";              //获取数据储存变量
 String com, tem1, tem2, humi, temnow, sta, state1, state2, time0, time1, time2, english;
-String webadd = "http://flash.weather.com.cn/wmaps/xml/zhejiang.xml";    //天气接口地址
-String city_id = "101210101";//浙江杭州
+String webadd = "http://flash.weather.com.cn/wmaps/xml/hunan.xml";    //天气接口地址
+String city_id = "101250101";//湖南长沙
 String time_url = "http://quan.suning.com/getSysTime.do";   //时间接口地址
 String english_url = "http://open.iciba.com/dsapi/";   //英语接口地址
 String daytime = "";
@@ -145,7 +145,8 @@ void get_english()
     String  input =   payload;
     JsonObject& root = jsonBuffer.parseObject(input);
     String  content =  root[String("content")];
-    english = content;
+    if(content.length()>100) english = content.substring(0, 100); //修复每日英语数据过长无法显示的问题。
+    else english = content;
     //Serial.println(english);
   }
   http.end();
